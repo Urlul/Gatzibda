@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gat Zibda — قدراتك تبدأ هنا</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213D;
+    --ink-soft:#2A3660;
+    --paper:#F4F6F5;
+    --paper-line:#E2E7E4;
+    --card:#FFFFFF;
+    --gold:#D6A419;
+    --gold-deep:#B4870F;
+    --pencil:#6B7280;
+    --pencil-light:#9CA3AF;
+    --correct:#1F7A5C;
+    --alert:#B23A2E;
+    --radius:14px;
+    --shadow: 0 6px 24px rgba(20,33,61,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    color:var(--ink);
+    font-family:'IBM Plex Sans Arabic', sans-serif;
+    line-height:1.7;
+  }
+  h1,h2,h3,.display{ font-family:'Tajawal', sans-serif; }
+  a{color:inherit;}
+  img{max-width:100%;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
+
+  /* Header */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(244,246,245,0.9);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .nav-row{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px; flex-wrap:wrap;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Tajawal'; font-weight:900; font-size:22px; color:var(--ink);}
+  .logo .bubble{
+    width:30px; height:30px; border-radius:50%; border:3px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    background:var(--gold); color:var(--ink); font-size:14px; font-weight:900;
+  }
+  nav.links{display:flex; gap:6px; flex-wrap:wrap;}
+  nav.links a{
+    font-size:14px; font-weight:700; padding:8px 14px; border-radius:999px;
+    text-decoration:none; color:var(--ink-soft); border:1.5px solid transparent;
+    transition:.15s;
+  }
+  nav.links a:hover{border-color:var(--ink); background:#fff;}
+  .edit-toggle{
+    font-family:'Tajawal'; font-weight:800; font-size:13px; cursor:pointer;
+    border:2px solid var(--ink); background:var(--ink); color:#fff;
+    padding:9px 16px; border-radius:999px; transition:.15s;
+  }
+  .edit-toggle.on{ background:var(--gold); border-color:var(--gold-deep); color:var(--ink); }
+  .edit-toggle:hover{opacity:.85;}
+  .export-toggle{
+    font-family:'Tajawal'; font-weight:800; font-size:13px; cursor:pointer;
+    border:2px solid var(--ink); background:transparent; color:var(--ink);
+    padding:9px 16px; border-radius:999px; transition:.15s;
+  }
+  .export-toggle:hover{background:var(--ink); color:#fff;}
+  .export-overlay{position:fixed; inset:0; background:rgba(20,33,61,0.75); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px;}
+  .export-box{background:#fff; border-radius:14px; padding:22px; max-width:520px; width:100%; max-height:80vh; display:flex; flex-direction:column; gap:12px;}
+  .export-box h3{margin:0; font-size:16px;}
+  .export-box p{margin:0; font-size:13px; color:var(--pencil); line-height:1.6;}
+  .export-box textarea{flex:1; min-height:220px; font-family:monospace; font-size:11.5px; padding:10px; border:1px solid var(--paper-line); border-radius:8px; direction:ltr; text-align:left;}
+  .export-box button.close-btn{align-self:flex-end; background:var(--ink); color:#fff; border:none; padding:9px 18px; border-radius:8px; font-family:'Tajawal'; font-weight:700; cursor:pointer;}
+
+  /* Hero */
+  .hero{
+    background: radial-gradient(120% 140% at 20% 0%, #1c2a52 0%, var(--ink) 55%, #0f1730 100%);
+    color:#fff; position:relative; overflow:hidden;
+    border-bottom:4px solid var(--gold);
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:32px 32px;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; padding:64px 0 48px; display:grid; grid-template-columns: 1.2fr .8fr; gap:40px; align-items:center;}
+  @media(max-width:820px){ .hero-inner{grid-template-columns:1fr;} }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; letter-spacing:.4px;
+    color:var(--gold); background:rgba(214,164,25,0.12); border:1px solid rgba(214,164,25,0.4);
+    padding:6px 12px; border-radius:999px; margin-bottom:18px;
+  }
+  .hero h1{font-size:clamp(32px,4.4vw,50px); line-height:1.25; margin:0 0 16px; font-weight:900;}
+  .hero h1 span{color:var(--gold);}
+  .hero p.lead{font-size:16.5px; color:#D7DCEE; max-width:52ch; margin:0 0 28px;}
+  .quicknav{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; max-width:460px;}
+  .qn-btn{
+    display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06);
+    border:1.5px solid rgba(255,255,255,0.18); border-radius:12px; padding:14px 16px;
+    text-decoration:none; color:#fff; font-weight:700; font-size:14.5px; transition:.15s;
+  }
+  .qn-btn:hover{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+  .qn-letter{
+    width:26px; height:26px; border-radius:50%; border:2px solid currentColor;
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:900; flex:none;
+  }
+
+  /* Countdown scantron */
+  .scantron{
+    background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.15);
+    border-radius:16px; padding:22px;
+  }
+  .scantron h3{margin:0 0 4px; font-size:15px; color:var(--gold); font-weight:800;}
+  .scantron .sub{font-size:12.5px; color:#B9C0DA; margin-bottom:16px;}
+  .bubbles{display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px;}
+  .bub{
+    width:16px; height:16px; border-radius:50%; border:2px solid var(--gold);
+    background:transparent; flex:none;
+  }
+  .bub.filled{background:var(--gold);}
+  .countdown-nums{display:flex; gap:14px;}
+  .cnum{text-align:center;}
+  .cnum b{display:block; font-family:'Tajawal'; font-size:26px; font-weight:900; color:#fff;}
+  .cnum span{font-size:11px; color:#B9C0DA;}
+
+  /* Announcement ticker */
+  .announce-bar{background:var(--gold); color:var(--ink); border-bottom:3px solid var(--gold-deep);}
+  .announce-inner{display:flex; align-items:center; gap:10px; padding:9px 0; font-weight:700; font-size:13.5px; flex-wrap:wrap;}
+  .announce-inner .pin{flex:none;}
+
+  /* Sections */
+  section{padding:56px 0;}
+  .sec-head{margin-bottom:28px;}
+  .sec-num{font-family:'Tajawal'; font-weight:800; font-size:12.5px; color:var(--gold-deep); letter-spacing:1px;}
+  .sec-head h2{font-size:clamp(24px,3vw,32px); margin:6px 0 8px; font-weight:900;}
+  .sec-head p{color:var(--pencil); font-size:14.5px; max-width:65ch; margin:0;}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+
+  .panel{
+    background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius);
+    padding:22px; box-shadow:var(--shadow);
+  }
+  .panel h3{margin:0 0 14px; font-size:17px; display:flex; align-items:center; gap:8px;}
+  .tag{font-size:10.5px; font-weight:800; padding:3px 9px; border-radius:999px; letter-spacing:.3px;}
+  .tag.free{background:rgba(31,122,92,0.12); color:var(--correct);}
+  .tag.paid{background:rgba(178,58,46,0.1); color:var(--alert);}
+
+  .item-list{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px;}
+  .item-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:11px 13px; background:var(--paper); border:1px solid var(--paper-line); border-radius:10px;
+    font-size:14px;
+  }
+  .item-row a.title{font-weight:700; text-decoration:none; color:var(--ink);}
+  .item-row a.title:hover{color:var(--gold-deep);}
+  .item-meta{display:flex; align-items:center; gap:8px;}
+  .del-btn, .edit-btn{
+    background:none; border:none; cursor:pointer; font-size:15px; line-height:1;
+    padding:2px 6px; border-radius:6px; display:none;
+  }
+  .del-btn{color:var(--alert); font-size:16px;}
+  .edit-btn{color:var(--ink-soft);}
+  .editing .del-btn, .editing .edit-btn{display:inline-block;}
+  .del-btn:hover{background:rgba(178,58,46,0.1);}
+  .edit-btn:hover{background:rgba(20,33,61,0.08);}
+
+  .add-form{display:none; gap:8px; margin-top:12px; flex-wrap:wrap;}
+  .editing .add-form{display:flex;}
+  .add-form input, .add-form select, .add-form textarea{
+    font-family:inherit; font-size:13.5px; padding:8px 10px; border:1.5px solid var(--paper-line);
+    border-radius:8px; background:#fff; flex:1; min-width:120px;
+  }
+  .add-form button{
+    font-family:'Tajawal'; font-weight:800; font-size:13px; background:var(--ink); color:#fff;
+    border:none; border-radius:8px; padding:8px 16px; cursor:pointer;
+  }
+  .add-form button:hover{background:var(--gold-deep);}
+  .footer-edit .add-form button{background:var(--gold); color:var(--ink);}
+  .footer-edit .add-form button:hover{background:#fff;}
+
+  [contenteditable="true"]{outline:2px dashed transparent; border-radius:4px; transition:.15s;}
+  .editing [contenteditable="true"]{outline-color:rgba(214,164,25,0.5); background:rgba(214,164,25,0.06); cursor:text;}
+  .editing [contenteditable="true"]:focus{outline-color:var(--gold-deep);}
+
+  table.guide{width:100%; border-collapse:collapse; font-size:13.5px;}
+  table.guide th{text-align:right; font-family:'Tajawal'; font-size:12px; color:var(--pencil); padding:8px 10px; border-bottom:2px solid var(--ink);}
+  table.guide td{padding:10px; border-bottom:1px solid var(--paper-line); vertical-align:middle;}
+  table.guide tr:hover td{background:var(--paper);}
+
+  .plan-card{display:flex; align-items:flex-start; gap:12px; padding:14px; background:var(--paper); border-radius:10px; border:1px solid var(--paper-line);}
+  .plan-num{
+    width:30px; height:30px; border-radius:50%; background:var(--ink); color:#fff; font-family:'Tajawal'; font-weight:900;
+    display:flex; align-items:center; justify-content:center; font-size:13px; flex:none;
+  }
+
+  footer{background:var(--ink); color:#D7DCEE; padding:44px 0 30px; margin-top:20px;}
+  footer h3{color:#fff; font-size:16px; margin:0 0 12px;}
+  .footer-grid{display:grid; grid-template-columns:1.3fr 1fr 1fr; gap:30px;}
+  @media(max-width:760px){.footer-grid{grid-template-columns:1fr;}}
+  .social-links{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;}
+  .social-links a{
+    padding:8px 14px; border-radius:999px; border:1.5px solid rgba(255,255,255,0.2); text-decoration:none;
+    font-size:13px; font-weight:700; color:#fff;
+  }
+  .social-links a:hover{background:var(--gold); border-color:var(--gold); color:var(--ink);}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,0.12); margin-top:30px; padding-top:18px; font-size:12.5px; color:#8f9ac2; text-align:center;}
+
+  .save-indicator{
+    position:fixed; bottom:18px; left:18px; z-index:80; background:var(--ink); color:#fff;
+    font-family:'Tajawal'; font-weight:700; font-size:13px; padding:9px 16px; border-radius:999px;
+    box-shadow:var(--shadow); opacity:0; transform:translateY(8px); transition:.25s; pointer-events:none;
+  }
+  .save-indicator.show{opacity:1; transform:translateY(0);}
+
+  .edit-hint{
+    display:none; font-size:12.5px; color:var(--gold-deep); background:rgba(214,164,25,0.12);
+    border:1px dashed var(--gold-deep); border-radius:10px; padding:10px 14px; margin-bottom:20px; font-weight:600;
+  }
+  .editing-active .edit-hint{display:block;}
+</style>
+</head>
+<body>
+
+<div class="save-indicator" id="saveIndicator">✓ تم الحفظ</div>
+
+<header class="site">
+  <div class="wrap nav-row">
+    <div class="logo"><span class="bubble">ز</span> Gat Zibda</div>
+    <nav class="links">
+      <a href="#foundation">التأسيس</a>
+      <a href="#practice">التدريب</a>
+      <a href="#plans">خطة المذاكرة</a>
+      <a href="#recommendations">التوصيات</a>
+      <a href="#about">تواصل معنا</a>
+    </nav>
+    <div style="display:flex; gap:8px;">
+      <button class="export-toggle" id="exportBtn">⤓ تصدير</button>
+      <button class="edit-toggle" id="editToggle">✎ وضع التعديل</button>
+    </div>
+  </div>
+</header>
+
+<div class="announce-bar">
+  <div class="wrap announce-inner">
+    <span class="pin">📌</span>
+    <span id="announceText" contenteditable="false">مواعيد القدرات الورقي — التسجيل: طلاب ١٤ سبتمبر · طالبات ١٦ سبتمبر · نهاية التسجيل ١١ ديسمبر</span>
+  </div>
+</div>
+
+<section class="hero" id="home">
+  <div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow">🎯 مبادرة طلابية مجانية</span>
+      <h1 contenteditable="false" id="heroTitle">استعد لاختبار القدرات <span>بثقة</span>، خطوة بخطوة</h1>
+      <p class="lead" contenteditable="false" id="heroLead">Gat Zibda مبادرة تجمع لك أفضل مصادر التأسيس، التدريب، وخطط المذاكرة في مكان واحد — عشان توصل لاختبارك وانت جاهز فعلاً، مو بس مذاكر.</p>
+      <div class="quicknav">
+        <a class="qn-btn" href="#foundation"><span class="qn-letter">A</span> التأسيس</a>
+        <a class="qn-btn" href="#practice"><span class="qn-letter">B</span> التدريب</a>
+        <a class="qn-btn" href="#plans"><span class="qn-letter">C</span> خطة المذاكرة</a>
+        <a class="qn-btn" href="#recommendations"><span class="qn-letter">D</span> التوصيات</a>
+      </div>
+    </div>
+    <div class="scantron">
+      <h3>موعد الاختبار الورقي</h3>
+      <div class="sub">١٠ – ١٤ ديسمبر ٢٠٢٦</div>
+      <div class="bubbles" id="bubbles"></div>
+      <div class="countdown-nums" id="countNums"></div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- FOUNDATION -->
+  <section id="foundation">
+    <div class="sec-head">
+      <div class="sec-num">القسم ٠٢</div>
+      <h2>مصادر التأسيس</h2>
+      <p>ابدأ من الصفر أو راجع أساسياتك — من مصادر Gat Zibda المجانية، أو من دليل شامل لأفضل مصادر السوق.</p>
+    </div>
+    <div class="edit-hint">وضع التعديل شغّال — اضغط ✎ لتعديل عنصر موجود، ✕ للحذف، أو أضف عنصر جديد من الأسفل. الموقع يخزن الروابط فقط (مو ملفات)، فلو عندك PDF ارفعه على Google Drive أو تيليجرام والصق الرابط هنا.</div>
+
+    <div class="grid2">
+      <div class="panel" id="freeResPanel">
+        <h3>📗 مصادر Gat Zibda المجانية</h3>
+        <ul class="item-list" id="freeResList"></ul>
+        <div class="add-form">
+          <input type="text" id="freeResTitle" placeholder="اسم الملف / الملخص">
+          <input type="text" id="freeResUrl" placeholder="رابط الملف (Drive / تيليجرام)">
+          <button onclick="addItem('freeResources', {title: val('freeResTitle'), url: val('freeResUrl')}, ['freeResTitle','freeResUrl'])">إضافة</button>
+        </div>
+      </div>
+
+      <div class="panel" id="guidePanel">
+        <h3>📘 دليل مصادر السوق (مجاني ومدفوع)</h3>
+        <table class="guide">
+          <thead><tr><th>المصدر</th><th>النوع</th><th>الرابط</th><th></th></tr></thead>
+          <tbody id="guideList"></tbody>
+        </table>
+        <div class="add-form">
+          <input type="text" id="guideName" placeholder="اسم المصدر">
+          <select id="guideType"><option value="free">مجاني</option><option value="paid">مدفوع</option></select>
+          <input type="text" id="guideUrl" placeholder="الرابط">
+          <button onclick="addItem('resourceGuide', {name: val('guideName'), type: val('guideType'), url: val('guideUrl')}, ['guideName','guideUrl'])">إضافة</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="practice">
+    <div class="sec-head">
+      <div class="sec-num">القسم ٠٣</div>
+      <h2>مصادر التدريب والتجميعات</h2>
+      <p>منصات وتطبيقات فيها أسئلة تدريبية وتجميعات لمحاكاة الاختبار الفعلي.</p>
+    </div>
+    <div class="panel" id="practicePanel">
+      <h3>🧩 منصات التدريب</h3>
+      <ul class="item-list" id="practiceList"></ul>
+      <div class="add-form">
+        <input type="text" id="practiceName" placeholder="اسم المنصة / التطبيق">
+        <select id="practiceType"><option value="free">مجاني</option><option value="paid">مدفوع</option></select>
+        <input type="text" id="practiceUrl" placeholder="الرابط">
+        <button onclick="addItem('practicePlatforms', {name: val('practiceName'), type: val('practiceType'), url: val('practiceUrl')}, ['practiceName','practiceUrl'])">إضافة</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section id="plans">
+    <div class="sec-head">
+      <div class="sec-num">القسم ٠٤</div>
+      <h2>جدول وخطة المذاكرة</h2>
+      <p>كيف تبدأ؟ وكيف توزع وقتك بين التأسيس والتدريب؟</p>
+    </div>
+    <div class="grid2">
+      <div class="panel" id="tipsPanel">
+        <h3>💡 نصائح عملية</h3>
+        <ul class="item-list" id="tipsList"></ul>
+        <div class="add-form">
+          <input type="text" id="tipTitle" placeholder="عنوان النصيحة">
+          <textarea id="tipBody" placeholder="تفاصيل النصيحة" rows="1"></textarea>
+          <button onclick="addItem('studyTips', {title: val('tipTitle'), body: val('tipBody')}, ['tipTitle','tipBody'])">إضافة</button>
+        </div>
+      </div>
+      <div class="panel" id="plansPanel">
+        <h3>🗓️ نماذج جداول مذاكرة</h3>
+        <ul class="item-list" id="plansList"></ul>
+        <div class="add-form">
+          <input type="text" id="planTitle" placeholder="اسم الجدول">
+          <input type="text" id="planUrl" placeholder="رابط الملف">
+          <button onclick="addItem('studyPlans', {title: val('planTitle'), url: val('planUrl')}, ['planTitle','planUrl'])">إضافة</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECOMMENDATIONS -->
+  <section id="recommendations">
+    <div class="sec-head">
+      <div class="sec-num">القسم ٠٥</div>
+      <h2>التوصيات والمراجعات</h2>
+      <p>قنوات وحسابات تعليمية موثوقة، وأدوات تساعدك تنظم وقتك.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel" id="tgPanel">
+        <h3>📢 قنوات تيليجرام</h3>
+        <ul class="item-list" id="tgList"></ul>
+        <div class="add-form">
+          <input type="text" id="tgTitle" placeholder="اسم القناة">
+          <input type="text" id="tgUrl" placeholder="الرابط">
+          <button onclick="addItem('telegramRecs', {title: val('tgTitle'), url: val('tgUrl')}, ['tgTitle','tgUrl'])">إضافة</button>
+        </div>
+      </div>
+      <div class="panel" id="ytPanel">
+        <h3>▶️ قنوات يوتيوب</h3>
+        <ul class="item-list" id="ytList"></ul>
+        <div class="add-form">
+          <input type="text" id="ytTitle" placeholder="اسم القناة">
+          <input type="text" id="ytUrl" placeholder="الرابط">
+          <button onclick="addItem('youtubeRecs', {title: val('ytTitle'), url: val('ytUrl')}, ['ytTitle','ytUrl'])">إضافة</button>
+        </div>
+      </div>
+    </div>
+    <div class="panel" style="margin-top:22px;" id="toolsPanel">
+      <h3>🛠️ أدوات مساعدة</h3>
+      <ul class="item-list" id="toolsList"></ul>
+      <div class="add-form">
+        <input type="text" id="toolTitle" placeholder="اسم الأداة">
+        <input type="text" id="toolUrl" placeholder="الرابط">
+        <button onclick="addItem('toolsRecs', {title: val('toolTitle'), url: val('toolUrl')}, ['toolTitle','toolUrl'])">إضافة</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="about">
+  <div class="wrap footer-grid">
+    <div>
+      <h3>عن Gat Zibda</h3>
+      <p contenteditable="false" id="aboutText" style="max-width:48ch;">مبادرة طلابية مجانية تهدف لمساعدة طلاب وطالبات الثانوية على الاستعداد لاختبار القدرات العامة، عبر تجميع أفضل المصادر وأدلة المذاكرة في مكان واحد، وبناء مجتمع داعم يتشارك فيه الطلاب خبراتهم.</p>
+    </div>
+    <div class="footer-edit" id="contactPanel">
+      <h3>تواصل معنا</h3>
+      <ul class="item-list" id="contactList" style="max-width:260px;"></ul>
+      <div class="add-form">
+        <input type="text" id="contactTitle" placeholder="اسم القناة (مثلاً: تيليجرام)">
+        <input type="text" id="contactUrl" placeholder="الرابط">
+        <button onclick="addItem('contact', {title: val('contactTitle'), url: val('contactUrl')}, ['contactTitle','contactUrl'])">إضافة</button>
+      </div>
+    </div>
+    <div>
+      <h3>روابطنا</h3>
+      <div class="social-links" id="socialLinks"></div>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">Gat Zibda © ٢٠٢٦ — صنع بحب لطلاب القدرات</div>
+</footer>
+
+<script>
+const DEFAULT_DATA = {
+  freeResources: [
+    {id:'f1', title:'ملخص القدرات الكمي - الأساسيات', url:'#'},
+    {id:'f2', title:'ملخص القدرات اللفظي - الأساسيات', url:'#'}
+  ],
+  resourceGuide: [
+    {id:'g1', name:'قناة أ - تأسيس كمي', type:'free', url:'#'},
+    {id:'g2', name:'دورة ب - تأسيس شامل', type:'paid', url:'#'}
+  ],
+  practicePlatforms: [
+    {id:'p1', name:'تطبيق تدريب أ', type:'free', url:'#'},
+    {id:'p2', name:'بنك أسئلة ب', type:'paid', url:'#'}
+  ],
+  studyTips: [
+    {id:'t1', title:'ابدأ بالتأسيس قبل التدريب', body:'لا تدخل حل الأسئلة قبل ما تكون فاهم الأساسيات، حتى ما تحبط بسرعة.'},
+    {id:'t2', title:'خصص وقت ثابت يومي', body:'حتى لو نص ساعة يوميًا أفضل من مذاكرة مكثفة مرة وحدة بالأسبوع.'}
+  ],
+  studyPlans: [
+    {id:'sp1', title:'جدول مذاكرة ٤ أسابيع', url:'#'}
+  ],
+  telegramRecs: [{id:'tg1', title:'قناة Gat Zibda الرسمية', url:'#'}],
+  youtubeRecs: [{id:'yt1', title:'قناة تعليمية موصى بها', url:'#'}],
+  toolsRecs: [{id:'to1', title:'حاسبة النسبة الموزونة', url:'#'}],
+  contact: [
+    {id:'c1', title:'تيليجرام', url:'#'},
+    {id:'c2', title:'X (تويتر)', url:'#'},
+    {id:'c3', title:'البريد الإلكتروني', url:'mailto:contact@example.com'}
+  ],
+  heroTitle: 'استعد لاختبار القدرات <span>بثقة</span>، خطوة بخطوة',
+  heroLead: 'Gat Zibda مبادرة تجمع لك أفضل مصادر التأسيس، التدريب، وخطط المذاكرة في مكان واحد — عشان توصل لاختبارك وانت جاهز فعلاً، مو بس مذاكر.',
+  announceText: 'مواعيد القدرات الورقي — التسجيل: طلاب ١٤ سبتمبر · طالبات ١٦ سبتمبر · نهاية التسجيل ١١ ديسمبر',
+  aboutText: 'مبادرة طلابية مجانية تهدف لمساعدة طلاب وطالبات الثانوية على الاستعداد لاختبار القدرات العامة، عبر تجميع أفضل المصادر وأدلة المذاكرة في مكان واحد، وبناء مجتمع داعم يتشارك فيه الطلاب خبراتهم.'
+};
+
+let DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let editMode = false;
+const STORAGE_KEY = 'site-content-v1';
+
+function uid(){ return 'id' + Math.random().toString(36).slice(2,9); }
+function val(id){ return document.getElementById(id).value; }
+
+async function loadData(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, true);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      DATA = Object.assign(JSON.parse(JSON.stringify(DEFAULT_DATA)), parsed);
+    }
+  }catch(e){
+    // no saved data yet, use defaults
+  }
+  renderAll();
+}
+
+let saveTimeout;
+async function saveData(){
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(async () => {
+    try{
+      await window.storage.set(STORAGE_KEY, JSON.stringify(DATA), true);
+      const ind = document.getElementById('saveIndicator');
+      ind.classList.add('show');
+      setTimeout(()=>ind.classList.remove('show'), 1400);
+    }catch(e){ console.error('save failed', e); }
+  }, 400);
+}
+
+function addItem(key, obj, clearIds){
+  if(Object.values(obj).some(v => v === undefined || v === '')){ return; }
+  obj.id = uid();
+  DATA[key].push(obj);
+  clearIds.forEach(id => document.getElementById(id).value = '');
+  saveData();
+  renderAll();
+}
+
+function removeItem(key, id){
+  DATA[key] = DATA[key].filter(i => i.id !== id);
+  saveData();
+  renderAll();
+}
+
+function editItem(key, id){
+  const item = DATA[key].find(i => i.id === id);
+  if(!item) return;
+  const labelKey = item.title !== undefined ? 'title' : 'name';
+  const newLabel = prompt('الاسم:', item[labelKey]);
+  if(newLabel === null || newLabel.trim() === '') return;
+  item[labelKey] = newLabel;
+  if('url' in item){
+    const newUrl = prompt('الرابط:', item.url);
+    if(newUrl !== null && newUrl.trim() !== '') item.url = newUrl;
+  }
+  if('body' in item){
+    const newBody = prompt('التفاصيل:', item.body);
+    if(newBody !== null) item.body = newBody;
+  }
+  if('type' in item){
+    const newType = prompt('النوع — اكتب free أو paid:', item.type);
+    if(newType === 'free' || newType === 'paid') item.type = newType;
+  }
+  saveData();
+  renderAll();
+}
+
+function renderSimpleList(containerId, key, opts){
+  const el = document.getElementById(containerId);
+  el.innerHTML = '';
+  DATA[key].forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'item-row';
+    const tagHtml = item.type ? `<span class="tag ${item.type}">${item.type === 'free' ? 'مجاني' : 'مدفوع'}</span>` : '';
+    const label = item.title || item.name;
+    const body = item.body ? `<div style="font-size:12.5px;color:var(--pencil);margin-top:3px;">${escapeHtml(item.body)}</div>` : '';
+    li.innerHTML = `
+      <div>
+        <a class="title" href="${escapeAttr(item.url || '#')}" target="_blank" rel="noopener">${escapeHtml(label)}</a>
+        ${body}
+      </div>
+      <div class="item-meta">${tagHtml}<button class="edit-btn" onclick="editItem('${key}','${item.id}')">✎</button><button class="del-btn" onclick="removeItem('${key}','${item.id}')">✕</button></div>
+    `;
+    el.appendChild(li);
+  });
+}
+
+function renderGuideTable(){
+  const tb = document.getElementById('guideList');
+  tb.innerHTML = '';
+  DATA.resourceGuide.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escapeHtml(item.name)}</td>
+      <td><span class="tag ${item.type}">${item.type === 'free' ? 'مجاني' : 'مدفوع'}</span></td>
+      <td><a class="title" href="${escapeAttr(item.url)}" target="_blank" rel="noopener">فتح الرابط</a></td>
+      <td><button class="edit-btn" onclick="editItem('resourceGuide','${item.id}')">✎</button><button class="del-btn" onclick="removeItem('resourceGuide','${item.id}')">✕</button></td>
+    `;
+    tb.appendChild(tr);
+  });
+}
+
+function renderContact(){
+  const el = document.getElementById('contactList');
+  el.innerHTML = '';
+  DATA.contact.forEach(item => {
+    const li = document.createElement('li');
+    li.className = 'item-row';
+    li.innerHTML = `
+      <a class="title" href="${escapeAttr(item.url)}" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
+      <span class="item-meta"><button class="edit-btn" onclick="editItem('contact','${item.id}')">✎</button><button class="del-btn" onclick="removeItem('contact','${item.id}')">✕</button></span>
+    `;
+    el.appendChild(li);
+  });
+  const social = document.getElementById('socialLinks');
+  social.innerHTML = '';
+  DATA.contact.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.url; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = item.title;
+    social.appendChild(a);
+  });
+}
+
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s){ return escapeHtml(s); }
+
+function renderAll(){
+  renderSimpleList('freeResList', 'freeResources');
+  renderGuideTable();
+  renderSimpleList('practiceList', 'practicePlatforms');
+  renderSimpleList('tipsList', 'studyTips');
+  renderSimpleList('plansList', 'studyPlans');
+  renderSimpleList('tgList', 'telegramRecs');
+  renderSimpleList('ytList', 'youtubeRecs');
+  renderSimpleList('toolsList', 'toolsRecs');
+  renderContact();
+  document.getElementById('heroTitle').innerHTML = DATA.heroTitle;
+  document.getElementById('heroLead').textContent = DATA.heroLead;
+  document.getElementById('announceText').textContent = DATA.announceText;
+  document.getElementById('aboutText').textContent = DATA.aboutText;
+}
+
+// Editable text fields sync back to DATA on blur
+['heroLead','announceText','aboutText'].forEach(id => {
+  document.getElementById(id).addEventListener('blur', (e) => {
+    DATA[id] = e.target.textContent;
+    saveData();
+  });
+});
+document.getElementById('heroTitle').addEventListener('blur', (e) => {
+  DATA.heroTitle = e.target.innerHTML;
+  saveData();
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const json = JSON.stringify(DATA, null, 2);
+  const overlay = document.createElement('div');
+  overlay.className = 'export-overlay';
+  overlay.innerHTML = `
+    <div class="export-box">
+      <h3>نسخة من المحتوى الحالي</h3>
+      <p>اضغطي داخل الصندوق (يتحدد كل النص تلقائيًا)، انسخيه، والصقيه لي بالشات عشان أثبّته كنسخة نهائية بالكود.</p>
+      <textarea readonly id="exportArea">${escapeHtml(json)}</textarea>
+      <button class="close-btn" id="exportCloseBtn">إغلاق</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  const ta = document.getElementById('exportArea');
+  ta.focus(); ta.select();
+  document.getElementById('exportCloseBtn').addEventListener('click', () => overlay.remove());
+});
+
+document.getElementById('editToggle').addEventListener('click', () => {
+  editMode = !editMode;
+  document.body.classList.toggle('editing-active', editMode);
+  document.querySelectorAll('.panel, .footer-edit').forEach(p => p.classList.toggle('editing', editMode));
+  document.getElementById('editToggle').classList.toggle('on', editMode);
+  document.getElementById('editToggle').textContent = editMode ? '✓ إنهاء التعديل' : '✎ وضع التعديل';
+  ['heroTitle','heroLead','announceText','aboutText'].forEach(id => {
+    document.getElementById(id).setAttribute('contenteditable', editMode ? 'true' : 'false');
+  });
+});
+
+// Countdown to exam window (Dec 10 - Dec 14, 2026)
+function renderCountdown(){
+  const start = new Date('2026-12-10T00:00:00');
+  const now = new Date();
+  const msPerDay = 1000*60*60*24;
+  let daysLeft = Math.ceil((start - now) / msPerDay);
+  const totalWindow = 30; // bubble scale window
+  if(daysLeft < 0) daysLeft = 0;
+  const filled = Math.max(0, totalWindow - Math.min(daysLeft, totalWindow));
+
+  const bubblesEl = document.getElementById('bubbles');
+  bubblesEl.innerHTML = '';
+  for(let i=0;i<totalWindow;i++){
+    const b = document.createElement('div');
+    b.className = 'bub' + (i < filled ? ' filled' : '');
+    bubblesEl.appendChild(b);
+  }
+
+  const diffMs = start - now;
+  const d = Math.max(0, Math.floor(diffMs / msPerDay));
+  const h = Math.max(0, Math.floor((diffMs % msPerDay) / (1000*60*60)));
+  const m = Math.max(0, Math.floor((diffMs % (1000*60*60)) / (1000*60)));
+  document.getElementById('countNums').innerHTML = `
+    <div class="cnum"><b>${d}</b><span>يوم</span></div>
+    <div class="cnum"><b>${h}</b><span>ساعة</span></div>
+    <div class="cnum"><b>${m}</b><span>دقيقة</span></div>
+  `;
+}
+renderCountdown();
+setInterval(renderCountdown, 60000);
+
+loadData();
+</script>
+</body>
+</html>
