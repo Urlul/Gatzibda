@@ -245,10 +245,6 @@
       <a href="#recommendations">التوصيات</a>
       <a href="#about">تواصل معنا</a>
     </nav>
-    <div style="display:flex; gap:8px;">
-      <button class="export-toggle" id="exportBtn">⤓ تصدير</button>
-      <button class="edit-toggle" id="editToggle">✎ وضع التعديل</button>
-    </div>
   </div>
 </header>
 
@@ -727,34 +723,6 @@ function renderAll(){
 document.getElementById('heroTitle').addEventListener('blur', (e) => {
   DATA.heroTitle = e.target.innerHTML;
   saveData();
-});
-
-document.getElementById('exportBtn').addEventListener('click', () => {
-  const json = JSON.stringify(DATA, null, 2);
-  const overlay = document.createElement('div');
-  overlay.className = 'export-overlay';
-  overlay.innerHTML = `
-    <div class="export-box">
-      <h3>نسخة من المحتوى الحالي</h3>
-      <p>اضغطي داخل الصندوق (يتحدد كل النص تلقائيًا)، انسخيه، والصقيه لي بالشات عشان أثبّته كنسخة نهائية بالكود.</p>
-      <textarea readonly id="exportArea">${escapeHtml(json)}</textarea>
-      <button class="close-btn" id="exportCloseBtn">إغلاق</button>
-    </div>`;
-  document.body.appendChild(overlay);
-  const ta = document.getElementById('exportArea');
-  ta.focus(); ta.select();
-  document.getElementById('exportCloseBtn').addEventListener('click', () => overlay.remove());
-});
-
-document.getElementById('editToggle').addEventListener('click', () => {
-  editMode = !editMode;
-  document.body.classList.toggle('editing-active', editMode);
-  document.querySelectorAll('.panel, .footer-edit').forEach(p => p.classList.toggle('editing', editMode));
-  document.getElementById('editToggle').classList.toggle('on', editMode);
-  document.getElementById('editToggle').textContent = editMode ? '✓ إنهاء التعديل' : '✎ وضع التعديل';
-  ['heroTitle','heroLead','announceText','aboutText'].forEach(id => {
-    document.getElementById(id).setAttribute('contenteditable', editMode ? 'true' : 'false');
-  });
 });
 
 // Countdown to exam window (Dec 10 - Dec 14, 2026)
